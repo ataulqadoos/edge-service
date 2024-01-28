@@ -18,6 +18,18 @@ spec:
         - name: edge-service
           image: edge-service:0.0.1-SNAPSHOT
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              port: 9000
+              path: /actuator/health/liveness
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              port: 9000
+              path: /actuator/health/readiness
+            initialDelaySeconds: 20
+            periodSeconds: 10
           lifecycle:
             preStop:
               exec:
